@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 use App\User;
+use App\Rules\MaxPosts;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePostRequest extends FormRequest
@@ -27,7 +29,7 @@ class StorePostRequest extends FormRequest
             
             'title' => 'required|unique:posts|min:3',
             'body' => 'required|min:10',
-            'user'=>'exists:users,id'
+            'user_id'=>['exists:users,id',new MaxPosts()]
         ];
     }
 }
