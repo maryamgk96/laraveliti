@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('posts', 'PostsController@index')->middleware('auth');
 Route::get('posts/create', 'PostsController@create')->middleware('auth');
+Route::get('posts/restore', 'PostsController@restore')->middleware('auth');
+
 Route::post('posts', 'PostsController@store')->middleware('auth');
 
 
@@ -26,7 +28,12 @@ Route::get('posts/{post}', 'PostsController@show')->middleware('auth');
 Route::post('posts/edit/{id}', 'PostsController@update')->middleware('auth');
 Route::delete('posts/delete/{id}', 'PostsController@destroy')->middleware('auth');
 
+Route::post('posts/viewa', 'PostsController@show')->middleware('auth');
+
+
 
 Auth::routes();
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\User;
 use Carbon\Carbon;
 
 class Post extends Model
 {
-    
+    use SoftDeletes;
     use Sluggable;
 
     /**
@@ -20,6 +22,8 @@ class Post extends Model
     protected $fillable = [
         'title', 'body',  'user_id','slug',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function user()
     {

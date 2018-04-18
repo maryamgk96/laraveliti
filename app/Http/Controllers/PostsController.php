@@ -23,7 +23,8 @@ class postsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(1);
+
+        $posts = Post::with('user')->orderBy('id', 'desc')->paginate(5);
         return view('posts/index')->withPosts($posts);
     }
 
@@ -59,10 +60,21 @@ class postsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Request $request ,Post $post)
     {
-        
-        return view('posts/show',compact('post'));
+        if($request->ajax())
+        {
+            $id = $request->input( 'id' );
+        $post = Post::find($id);
+        $user =$post->user;
+        return response()->json(['post'=>$post,'user'=>$user]);
+
+        } 
+        else
+        {
+            return view('posts/show',compact('post'));
+
+        }  
     }
 
     /**
@@ -113,4 +125,23 @@ class postsController extends Controller
         return redirect('/posts');
 
     }
+
+    public function restore(){
+        $error="no shit";
+        $post =Post::onlyTrashed()->orderBy('deleted_at', 'desc')->first();
+        if($post !=null )
+        {
+            $post->restore();
+            return redirect('/posts');
+        }
+            
+            else {
+            
+                return redirect('/posts');
+                    }
+            
+
+            }
+
+   
 }
