@@ -127,7 +127,7 @@ class postsController extends Controller
     }
 
     public function restore(){
-        $error="no shit";
+        
         $post =Post::onlyTrashed()->orderBy('deleted_at', 'desc')->first();
         if($post !=null )
         {

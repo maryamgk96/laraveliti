@@ -66,7 +66,6 @@ else
          $password = bcrypt(str_random(10));
 
            $userA=User::create([
-            'id' => $user->getId(),
             'name' => $user->getNickName(),
             'email' => $user->getEmail(),
             'password' =>$password]);
